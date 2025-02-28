@@ -2,22 +2,40 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
-    {
-        // User::factory(10)->create();
+  public function run()
+  {
+    // Disable foreign key checks to avoid issues while truncating tables
+    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-    }
+    // Truncate all tables before seeding
+    DB::table('users')->truncate();
+    DB::table('conditions')->truncate();
+    DB::table('damage_types')->truncate();
+    DB::table('equipment_categories')->truncate();
+    DB::table('equipment')->truncate();
+    DB::table('magic_items')->truncate();
+    DB::table('magic_item_variants')->truncate();
+    DB::table('spells')->truncate();
+    DB::table('weapon_properties')->truncate();
+
+    // Enable foreign key checks again
+    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+    // Run Seeders
+    $this->call([
+      ConditionSeeder::class,
+      DamageTypeSeeder::class,
+      EquipmentCategorySeeder::class,
+      EquipmentSeeder::class,
+      MagicItemSeeder::class,
+      MagicItemVariantSeeder::class,
+      SpellSeeder::class,
+      WeaponPropertySeeder::class,
+    ]);
+  }
 }

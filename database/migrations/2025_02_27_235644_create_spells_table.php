@@ -11,19 +11,11 @@ return new class extends Migration {
       $table->id();
       $table->string('name')->unique();
       $table->text('description');
-      $table->text('higher_level')->nullable(); // Additional effects when cast at a higher level
       $table->string('range');
-      $table->json('components'); // Stores V, S, M as a JSON array
-      $table->string('material')->nullable(); // Material components
-      $table->boolean('ritual')->default(false);
-      $table->string('duration');
-      $table->boolean('concentration')->default(false);
-      $table->string('casting_time');
-      $table->integer('level'); // Spell level (0 for cantrips)
-      $table->string('attack_type')->nullable(); // Melee or Ranged (if applicable)
-      $table->string('school'); // Stores spell school name (e.g., "Evocation")
-      $table->foreignId('damage_type_id')->nullable()->constrained('damage_types')->onDelete('set null'); // Links to `damage_types`
-      $table->json('damage_at_slot_level')->nullable(); // Stores damage scaling as JSON
+      $table->string('attack_type')->nullable(); //attack type (melee/ranged)
+      $table->string('school'); // Store spell school as a simple string instead of a foreign key
+      $table->integer('level');
+      $table->json('damage_at_slot_level')->nullable();
       $table->timestamps();
     });
   }

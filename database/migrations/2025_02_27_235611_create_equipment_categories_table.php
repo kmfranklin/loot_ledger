@@ -9,6 +9,7 @@ return new class extends Migration {
   {
     Schema::create('equipment_categories', function (Blueprint $table) {
       $table->id();
+      $table->string('index')->unique();
       $table->string('name')->unique(); // Unique category name (e.g., Weapon, Ring)
       $table->timestamps();
     });
